@@ -1,0 +1,27 @@
+{
+  "dependencies": {
+    "fs.promises": "^0.1.2"
+  },
+  "scripts": {
+    "start": "node server.js"
+  },
+  "name": "nodejs",
+  "version": "1.0.0",
+  "main": "server.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mahmoudmosa2877/vero.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mahmoudmosa2877/vero/issues"
+  },
+  "homepage": "https://github.com/mahmoudmosa2877/vero#readme",
+  "description": ""
+}
