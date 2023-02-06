@@ -1,7 +1,7 @@
 const http = require("http");
 const url = require("url");
 const stringDecoder = require("string_decoder").StringDecoder;
-const handlers = require("./handlers");
+const handlers = require("./lib/handlers");
 
 const server = http.createServer((req, res) => {
   const parsedUrl = url.parse(req.url, true);
@@ -16,6 +16,7 @@ const server = http.createServer((req, res) => {
     typeof router[trimmedPath] !== "undefined"
       ? router[trimmedPath]
       : handlers.notFound;
+  // console.log(router[users]);
 
   req.on("data", (data) => {
     buffer += decoder.write(data);
@@ -30,10 +31,21 @@ const server = http.createServer((req, res) => {
       header,
       payload: buffer,
     };
+    // handlers.users(data, (statusCode, payload) => {
+    //   console.log(data.method);
+    //   statusCode = typeof statue == "number" ? statusCode : 200;
+    //   payload = typeof payload == "object" ? payload : {};
+    //   const payloadString = JSON.stringify(payload);
+    //   res.setHeader("Content-Type", "application/json");
+    //   console.log(typeof payloadString);
+    //   res.end(payloadString);
+    // });
+
     console.log(data);
 
     choosenHandler(data, (statusCode, payload) => {
-      statusCode = typeof statusCode == "number" ? statusCode : 200;
+      console.log(data.method);
+      statusCode = typeof statue == "number" ? statusCode : 200;
       payload = typeof payload == "object" ? payload : {};
       const payloadString = JSON.stringify(payload);
       res.setHeader("Content-Type", "application/json");
@@ -49,4 +61,7 @@ server.listen(3000, () => {
 
 const router = {
   sample: handlers.sample,
+  users: handlers.users,
+  tokens: handlers.tokens,
+  user: handlers.user,
 };
