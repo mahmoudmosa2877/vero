@@ -21,7 +21,7 @@ const server = http.createServer((req, res) => {
   req.on("data", (data) => {
     buffer += decoder.write(data);
   });
-  req.on("end", () => {
+  req.on("end", async () => {
     buffer += decoder.end();
     console.log(buffer, typeof buffer);
     const data = {
@@ -43,15 +43,23 @@ const server = http.createServer((req, res) => {
 
     console.log(data);
 
-    choosenHandler(data, (statusCode, payload) => {
-      console.log(data.method);
-      statusCode = typeof statue == "number" ? statusCode : 200;
-      payload = typeof payload == "object" ? payload : {};
+    try {
+      const respon = await choosenHandler(data);
+      console.log(respon, "respone");
+      const statusCode =
+        typeof respon.statusCode == "number" ? respon.statusCode : 200;
+      const payload = typeof respon == "object" ? respon : {};
       const payloadString = JSON.stringify(payload);
       res.setHeader("Content-Type", "application/json");
       console.log(typeof payloadString);
       res.end(payloadString);
-    });
+    } catch (err) {
+      console.log(err);
+    }
+
+    //   , (statusCode, payload) => {
+    //   console.log(data.method);
+    // });
   });
 });
 
