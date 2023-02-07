@@ -31,16 +31,6 @@ const server = http.createServer((req, res) => {
       header,
       payload: buffer,
     };
-    // handlers.users(data, (statusCode, payload) => {
-    //   console.log(data.method);
-    //   statusCode = typeof statue == "number" ? statusCode : 200;
-    //   payload = typeof payload == "object" ? payload : {};
-    //   const payloadString = JSON.stringify(payload);
-    //   res.setHeader("Content-Type", "application/json");
-    //   console.log(typeof payloadString);
-    //   res.end(payloadString);
-    // });
-
     console.log(data);
 
     try {
@@ -54,12 +44,10 @@ const server = http.createServer((req, res) => {
       console.log(typeof payloadString);
       res.end(payloadString);
     } catch (err) {
+      console.log(err, typeof err);
       console.log(err);
+      res.end(err);
     }
-
-    //   , (statusCode, payload) => {
-    //   console.log(data.method);
-    // });
   });
 });
 
