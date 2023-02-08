@@ -35,18 +35,18 @@ const server = http.createServer((req, res) => {
 
     try {
       const respon = await choosenHandler(data);
-      console.log(respon, "respone");
-      const statusCode =
-        typeof respon.statusCode == "number" ? respon.statusCode : 200;
+      // console.log(respon, "respone");
+      //  const statusCode =
+      //   typeof respon.statusCode == "number" ? respon.statusCode : 200;
       const payload = typeof respon == "object" ? respon : {};
       const payloadString = JSON.stringify(payload);
       res.setHeader("Content-Type", "application/json");
       console.log(typeof payloadString);
       res.end(payloadString);
     } catch (err) {
-      console.log(err, typeof err);
-      console.log(err);
-      res.end(err);
+      // console.log(err, typeof err);
+      // console.log(err);
+      res.end("err");
     }
   });
 });
