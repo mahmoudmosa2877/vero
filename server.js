@@ -36,11 +36,12 @@ const server = http.createServer((req, res) => {
     try {
       const respon = await choosenHandler(data);
       // console.log(respon, "respone");
-      //  const statusCode =
-      //   typeof respon.statusCode == "number" ? respon.statusCode : 200;
+      //   const statusCode =
+      //     typeof respon.statusCode == "number" ? respon.statusCode : 200;
       const payload = typeof respon == "object" ? respon : {};
       const payloadString = JSON.stringify(payload);
       res.setHeader("Content-Type", "application/json");
+      //   res.writeHead(statusCode);
       console.log(typeof payloadString);
       res.end(payloadString);
     } catch (err) {
@@ -59,5 +60,4 @@ const router = {
   sample: handlers.sample,
   users: handlers.users,
   tokens: handlers.tokens,
-  user: handlers.user,
 };
