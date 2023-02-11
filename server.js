@@ -16,14 +16,14 @@ const server = http.createServer((req, res) => {
     typeof router[trimmedPath] !== "undefined"
       ? router[trimmedPath]
       : handlers.notFound;
-  // console.log(router[users]);
+  // //console.log(router[users]);
 
   req.on("data", (data) => {
     buffer += decoder.write(data);
   });
   req.on("end", async () => {
     buffer += decoder.end();
-    //console.log(buffer, typeof buffer);
+    ////console.log(buffer, typeof buffer);
     // const bufferJson = JSON.parse(buffer);
     const data = {
       trimmedPath,
@@ -32,32 +32,32 @@ const server = http.createServer((req, res) => {
       headers,
       payload: JSON.parse(buffer),
     };
-    data;
+    // //console.log(data);
 
     try {
       const respon = await choosenHandler(data);
-      // console.log(respon, "respone");
+      // //console.log(respon, "respone");
       //   const statusCode =
       //     typeof respon.statusCode == "number" ? respon.statusCode : 200;
-      console.log(respon);
+      //console.log(respon);
       const payload = typeof respon == "object" ? respon : {};
       const payloadString = JSON.stringify(payload);
       res.setHeader("Content-Type", "application/json");
       //   res.writeHead(statusCode);
-      console.log(typeof payloadString);
-      console.log(respon, "respon");
+      //console.log(typeof payloadString);
+      //console.log(respon, "respon");
       res.end(payloadString);
     } catch (err) {
-      // console.log(err, typeof err);
+      // //console.log(err, typeof err);
       const payloadString = JSON.stringify(err);
-      console.log(err, "err in the server");
+      //console.log(err, "err in the server");
       res.end(payloadString);
     }
   });
 });
 
 server.listen(3000, () => {
-  console.log("server is listening");
+  //console.log("server is listening");
 });
 
 const router = {
