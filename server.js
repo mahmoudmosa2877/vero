@@ -23,16 +23,16 @@ const server = http.createServer((req, res) => {
   });
   req.on("end", async () => {
     buffer += decoder.end();
-    console.log(buffer, typeof buffer);
-    const bufferJson = JSON.parse(buffer);
+    //console.log(buffer, typeof buffer);
+    // const bufferJson = JSON.parse(buffer);
     const data = {
       trimmedPath,
       queryString,
       method,
       headers,
-      payload: bufferJson,
+      payload: JSON.parse(buffer),
     };
-    console.log(data);
+    data;
 
     try {
       const respon = await choosenHandler(data);
@@ -49,8 +49,9 @@ const server = http.createServer((req, res) => {
       res.end(payloadString);
     } catch (err) {
       // console.log(err, typeof err);
+      const payloadString = JSON.stringify(err);
       console.log(err, "err in the server");
-      res.end(err);
+      res.end(payloadString);
     }
   });
 });
