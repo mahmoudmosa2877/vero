@@ -3,6 +3,25 @@ const url = require("url");
 const stringDecoder = require("string_decoder").StringDecoder;
 const handlers = require("./lib/handlers");
 
+// Download the helper library from https://www.twilio.com/docs/node/install
+// Set environment variables for your credentials
+// Read more at http://twil.io/secure
+const accountSid = "AC99f60c5cfbcffd55ea2605ad2ee1ff95";
+const authToken = "b193145532966038aa2ed92dec15f943";
+const client = require("twilio")(accountSid, authToken);
+
+client.messages
+  .create({
+    body: " Mahmoud gamal",
+    from: "+16205829145",
+    to: "+201002363642",
+  })
+  .then((message) => console.log(message));
+
+// handlers.sendTwilioSms("+201002363642", "Hello!", function (err) {
+//   console.log("this was the err", err);
+// });
+
 const server = http.createServer((req, res) => {
   const parsedUrl = url.parse(req.url, true);
   const path = parsedUrl.pathname;
@@ -55,6 +74,57 @@ const server = http.createServer((req, res) => {
     }
   });
 });
+
+handlers.sendTwilioSms = function (phone, msg, callback) {
+  phone =
+    typeof phone == "string" && phone.trim().length == 10
+      ? phone.trim()
+      : false;
+  msg =
+    typeof msg == "string" && msg.trim().length > 0 && msg.trim().length <= 1600
+      ? msg.trim()
+      : false;
+
+  if (phone && msg) {
+    const payload = {
+      From: config.twilio.fromPhone,
+      To: "+1" + phone,
+      Body: msg,
+    };
+    const stringPayload = queryString.stringify(payload);
+
+    const requestDetails = {
+      protocol: "https:",
+      hostname: "api.twilio.com",
+      method: "POST",
+      path:
+        "/2010-04-01/Accouonts/" + config.twilio.accountSid + "/Messages.json",
+      auth: config.twilio.accountSid + ":" + config.twilio.authToken,
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        "Content-Length": Buffer.byteLength(stringPayload),
+      },
+    };
+
+    const req = https.request(requestDetails, function (res) {
+      var status = res.statusCode;
+
+      if (status == 200 || status == 201) {
+        callback(false);
+      } else {
+        callback("status returned was");
+        console.log(res.error);
+      }
+    });
+
+    req.on("error", function (e) {
+      callback(e);
+    });
+    req.write(stringPayload);
+    req.end();
+  } else {
+  }
+};
 
 server.listen(3000, () => {
   //console.log("server is listening");

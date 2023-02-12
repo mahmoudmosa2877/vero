@@ -6,6 +6,11 @@ environments.staging = {
   envName: "staging",
   hashingSecret: "thisIsASecret",
   maxChecks: 5,
+  twilio: {
+    accountSid: "AC99f60c5cfbcffd55ea2605ad2ee1ff95",
+    authToken: "b193145532966038aa2ed92dec15f943",
+    fromPhone: "+16205829145",
+  },
 };
 
 environments.production = {
