@@ -8,12 +8,6 @@
 //Dependancies
 const server = require("./lib/server");
 const worker = require("./lib/worker");
-// const _data = require("./lib/lib");
-// const http = require("http");
-// const url = require("url");
-// const handlers = require("./lib/handlers");
-
-// _data.list("users");
 
 //Declare the app
 const app = {};
@@ -22,8 +16,9 @@ const app = {};
 app.init = async function () {
   //start the server
   server.init();
+
   //start the workers
-  worker.init();
+  // worker.init();
 };
 
 //Execute
